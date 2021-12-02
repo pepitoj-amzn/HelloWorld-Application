@@ -1,0 +1,11 @@
+version: 0.0
+os: linux
+files:
+  - source: ./application/helloWorld.py
+    destination: /home/ec2-user/
+  - source: ./scripts/test_app.sh
+    destination: /home/ec2-user
+file_exists_behavior: OVERWRITE
+hooks:
+  AfterInstall:
+    - location: ./scripts/test_app.sh

@@ -1,0 +1,43 @@
+version: 0.2
+
+run-as: root
+
+env:
+  shell: bash
+  variables:
+    SOMETHING: "ANOTHER SOMETHING"
+phases:
+  install:
+    runtime-versions:
+      python: 3.7
+    commands:
+      - echo Entered the install phase...
+      - yum update -y
+      - yum install pip -y
+      - pip install pytest
+    finally:
+      - echo This always runs even if the update or install command fails
+  pre_build:
+    commands:
+      - echo Entering the pre_build phase...
+    finally:
+      - echo this always run even if the command fails again
+  build:
+    commands:
+      - echo Entering the build phase...
+      - python -m pytest --junitxml='reports/output.xml'
+    finally:
+      - echo this always run even if the command fails again again
+  post_build:
+    commands:
+      - echo Entering the post_build phase...
+artifacts:
+  files:
+    - '**/*'
+reports:
+  pytest_reports:
+    files:
+      - 'output.xml'
+    base-directory: 'reports'
+    file-format: JUNITXML
+    discord-paths: no
