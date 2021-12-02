@@ -25,7 +25,7 @@ phases:
   build:
     commands:
       - echo Entering the build phase...
-      - python -m pytest --junitxml='reports/output.xml'
+      - python -m pytest --junitxml='reports/output.xml' application/helloWorld.py
     finally:
       - echo this always run even if the command fails again again
   post_build:
